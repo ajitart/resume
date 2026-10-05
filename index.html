@@ -89,15 +89,20 @@ svg{display:block}
 .intro{position:relative;overflow:hidden}
 .intro .wrap{position:relative;z-index:1}
 /* beams with collision */
-.beams{position:absolute;inset:0;pointer-events:none;z-index:0}
-.beam{position:absolute;top:0;width:1.5px;border-radius:2px;background:linear-gradient(to bottom,transparent,color-mix(in srgb,var(--brand) 55%,transparent) 55%,var(--brand));will-change:transform}
-.spark{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--brand);will-change:transform,opacity}
-.flash{position:absolute;height:2px;width:90px;border-radius:2px;background:radial-gradient(closest-side,var(--brand),transparent);will-change:opacity,transform}
+.beams{position:absolute;inset:0;pointer-events:none;z-index:0;--beam:rgba(15,17,21,.28)}
+:root[data-theme="dark"] .beams{--beam:rgba(238,240,243,.26)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .beams{--beam:rgba(238,240,243,.26)}}
+.beam{position:absolute;top:0;width:1.5px;border-radius:2px;background:linear-gradient(to bottom,transparent,color-mix(in srgb,var(--beam) 50%,transparent) 55%,var(--beam));will-change:transform}
+.spark{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--beam);will-change:transform,opacity}
+.flash{position:absolute;height:2px;width:90px;border-radius:2px;background:radial-gradient(closest-side,var(--beam),transparent);will-change:opacity,transform}
 @media (prefers-reduced-motion: reduce){.beams{display:none}}
 .intro .wrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;grid-template-areas:"lockup photo" "body facts";gap:28px clamp(32px,6vw,88px);align-items:end}
 .ibody{grid-area:body}
 @media (min-width:901px){.ibody{align-self:start;margin-top:-11.5px}}.facts{grid-area:facts}
 .lockup{grid-area:lockup;align-self:center;display:flex;align-items:center;gap:clamp(14px,1.6vw,22px)}
+.lockup{position:relative}
+.logo3d{position:absolute;pointer-events:none;z-index:2}
+.lockup.has3d .mark{visibility:hidden}
 .mark{flex:none;height:clamp(4.11rem,9.2vw,7.02rem);width:auto;aspect-ratio:83.76/114.34;color:var(--brand);transform:translateY(-20px)}
 h1{margin:0;font-size:clamp(1.9rem,3.4vw,2.6rem);line-height:1;letter-spacing:-.04em;font-weight:600}
 .role{margin:16px 0 0;font-size:clamp(1.15rem,1.9vw,1.4rem);letter-spacing:-.015em;color:var(--fg);font-weight:500}
@@ -290,7 +295,8 @@ main,.foot{position:relative;z-index:1}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   html,body{background:#fff}
   body{font-size:12px;line-height:1.45}
-  .bar,.cta,.tl,.toast,.copy-btn,.contact .ext,.foot,.dots,.dots-glow,.beams{display:none!important}
+  .bar,.cta,.tl,.toast,.copy-btn,.contact .ext,.foot,.dots,.dots-glow,.beams,.logo3d{display:none!important}
+  .lockup.has3d .mark{visibility:visible!important}
   .wrap{max-width:none;padding:0}
   a{text-decoration:none}
 
@@ -701,6 +707,81 @@ main,.foot{position:relative;z-index:1}
   [2004,2010,2015,2020,2025].forEach(function(y){var s=document.createElement('span');s.className='tick';s.textContent=y;s.style.left=((m(y+'-01')-t0)/span*100)+'%';yrs.appendChild(s)});
   var rng=document.createElement('div');rng.className='tl-range';rng.setAttribute('aria-hidden','true');rng.appendChild(document.createElement('b'));yrs.appendChild(rng);tlSpy();
 })();
+</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js"}}</script>
+<script type="module">
+/* 3D wobbling logo (MeshWobbleMaterial-style) */
+import * as THREE from 'three';
+const lockup=document.querySelector('.intro .lockup'), mark=lockup&&lockup.querySelector('.mark');
+const pathEl=document.querySelector('#mark path');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function hasGL(){try{const c=document.createElement('canvas');return !!(c.getContext('webgl2')||c.getContext('webgl'))}catch(e){return false}}
+if(lockup&&mark&&pathEl&&!reduce&&hasGL()){
+  // parse the logo path (M, L, C, Z only)
+  const sp=new THREE.ShapePath();
+  const tok=pathEl.getAttribute('d').match(/[MLCZ]|-?\d*\.?\d+/gi);let i=0,cmd;
+  const n=()=>parseFloat(tok[i++]);
+  while(i<tok.length){
+    if(/[MLCZ]/i.test(tok[i])){cmd=tok[i++].toUpperCase();if(cmd==='Z')continue}
+    if(cmd==='M'){sp.moveTo(n(),n());cmd='L'}
+    else if(cmd==='L'){sp.lineTo(n(),n())}
+    else if(cmd==='C'){sp.bezierCurveTo(n(),n(),n(),n(),n(),n())}
+    else{i++}
+  }
+  const shapes=sp.subPaths.map(p=>new THREE.Shape(p.getPoints(28)));
+  const geo=new THREE.ExtrudeGeometry(shapes,{depth:14,bevelEnabled:true,bevelThickness:2.4,bevelSize:1.4,bevelSegments:4,curveSegments:28});
+  geo.scale(1,-1,1);geo.center();
+  const sz=new THREE.Vector3();geo.computeBoundingBox();geo.boundingBox.getSize(sz);
+  const k=2/sz.y;geo.scale(k,k,k);geo.computeVertexNormals();
+
+  const mat=new THREE.MeshStandardMaterial({color:0xffc400,roughness:.32,metalness:.18,side:THREE.DoubleSide});
+  const uni={time:{value:0},factor:{value:.22}};
+  mat.onBeforeCompile=sh=>{
+    sh.uniforms.time=uni.time;sh.uniforms.factor=uni.factor;
+    sh.vertexShader='uniform float time;\nuniform float factor;\n'+sh.vertexShader;
+    sh.vertexShader=sh.vertexShader.replace('#include <begin_vertex>',
+      'float theta=sin(time+position.y*1.6)/2.0*factor;float c=cos(theta);float s=sin(theta);mat3 m=mat3(c,0,s,0,1,0,-s,0,c);vec3 transformed=vec3(position)*m;vNormal=vNormal*m;');
+  };
+  const mesh=new THREE.Mesh(geo,mat);
+  const scene=new THREE.Scene();scene.add(mesh);
+  scene.add(new THREE.AmbientLight(0xffffff,1.15));
+  const key=new THREE.DirectionalLight(0xffffff,2.2);key.position.set(2,3,4);scene.add(key);
+  const rim=new THREE.DirectionalLight(0xffe08a,1.2);rim.position.set(-3,-1,-2);scene.add(rim);
+  const cam=new THREE.PerspectiveCamera(30,1,.1,50);cam.position.set(0,0,5.4);
+
+  const canvas=document.createElement('canvas');canvas.className='logo3d';canvas.setAttribute('aria-hidden','true');
+  lockup.insertBefore(canvas,mark);
+  const ren=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  ren.setPixelRatio(Math.min(devicePixelRatio,2));ren.outputColorSpace=THREE.SRGBColorSpace;
+
+  const PAD=1.45;
+  function place(){
+    const lr=lockup.getBoundingClientRect(),mr=mark.getBoundingClientRect();
+    const w=mr.width,h=mr.height,cw=Math.round(w*PAD*1.25),ch=Math.round(h*PAD);if(!w||!h)return;
+    canvas.style.width=cw+'px';canvas.style.height=ch+'px';
+    canvas.style.left=(mr.left-lr.left+w/2-cw/2)+'px';canvas.style.top=(mr.top-lr.top+h/2-ch/2)+'px';
+    ren.setSize(cw,ch,false);cam.aspect=cw/ch;
+    cam.position.z=2/(2*Math.tan(THREE.MathUtils.degToRad(cam.fov/2)))*PAD*1.02;cam.updateProjectionMatrix();
+  }
+  place();addEventListener('resize',place);
+
+  let tx=0,ty=0,rx=0,ry=0,hover=0,hv=0,run=true,t0=performance.now();
+  addEventListener('pointermove',e=>{
+    tx=(e.clientY/innerHeight-.5)*.5;ty=(e.clientX/innerWidth-.5)*.8;
+    const r=canvas.getBoundingClientRect();hover=(e.clientX>r.left&&e.clientX<r.right&&e.clientY>r.top&&e.clientY<r.bottom)?1:0;
+  },{passive:true});
+  new IntersectionObserver(es=>{run=es[0].isIntersecting;if(run)requestAnimationFrame(loop)}).observe(canvas);
+  function loop(now){
+    if(!run)return;
+    const t=(now-t0)/1000;uni.time.value=t*2.2;
+    hv+=(hover-hv)*.08;uni.factor.value=.22+hv*.55;
+    rx+=(tx-rx)*.06;ry+=(ty-ry)*.06;
+    mesh.rotation.x=rx+Math.sin(t*.7)*.05;mesh.rotation.y=ry+Math.sin(t*.5)*.12;
+    ren.render(scene,cam);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(t=>{loop(t);lockup.classList.add('has3d')});
+}
 </script>
 </body>
 </html>
