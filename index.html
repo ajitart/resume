@@ -86,6 +86,14 @@ svg{display:block}
 
 /* header */
 .intro{padding:clamp(48px,8vw,104px) 0 clamp(40px,6vw,72px);border-bottom:1px solid var(--line)}
+.intro{position:relative;overflow:hidden}
+.intro .wrap{position:relative;z-index:1}
+/* beams with collision */
+.beams{position:absolute;inset:0;pointer-events:none;z-index:0}
+.beam{position:absolute;top:0;width:1.5px;border-radius:2px;background:linear-gradient(to bottom,transparent,color-mix(in srgb,var(--brand) 55%,transparent) 55%,var(--brand));will-change:transform}
+.spark{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--brand);will-change:transform,opacity}
+.flash{position:absolute;height:2px;width:90px;border-radius:2px;background:radial-gradient(closest-side,var(--brand),transparent);will-change:opacity,transform}
+@media (prefers-reduced-motion: reduce){.beams{display:none}}
 .intro .wrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;grid-template-areas:"lockup photo" "body facts";gap:28px clamp(32px,6vw,88px);align-items:end}
 .ibody{grid-area:body}
 @media (min-width:901px){.ibody{align-self:start;margin-top:-11.5px}}.facts{grid-area:facts}
@@ -282,7 +290,7 @@ main,.foot{position:relative;z-index:1}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   html,body{background:#fff}
   body{font-size:12px;line-height:1.45}
-  .bar,.cta,.tl,.toast,.copy-btn,.contact .ext,.foot,.dots,.dots-glow{display:none!important}
+  .bar,.cta,.tl,.toast,.copy-btn,.contact .ext,.foot,.dots,.dots-glow,.beams{display:none!important}
   .wrap{max-width:none;padding:0}
   a{text-decoration:none}
 
@@ -413,6 +421,7 @@ main,.foot{position:relative;z-index:1}
 
 <main id="top">
   <div class="intro">
+    <div class="beams" id="beams" aria-hidden="true"></div>
     <div class="wrap">
         <div class="lockup">
           <svg class="mark" aria-hidden="true" viewBox="0 0 83.76 114.34"><use href="#mark"/></svg>
@@ -622,6 +631,27 @@ main,.foot{position:relative;z-index:1}
     addEventListener('pointermove',function(e){root.style.setProperty('--mx',e.clientX+'px');root.style.setProperty('--my',e.clientY+'px');document.body.classList.add('glow')},{passive:true});
     document.documentElement.addEventListener('pointerleave',function(){document.body.classList.remove('glow')});
   }
+  /* beams with collision */
+  (function(){
+    var box=document.getElementById('beams'),intro=box&&box.parentElement;
+    if(!box||!box.animate||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    var n=innerWidth<640?5:9;
+    function rnd(a,b){return a+Math.random()*(b-a)}
+    function explode(x,H){
+      var f=document.createElement('div');f.className='flash';f.style.left=(x-45)+'px';f.style.top=(H-2)+'px';box.appendChild(f);
+      f.animate([{opacity:1,transform:'scaleX(.3)'},{opacity:0,transform:'scaleX(1.4)'}],{duration:700,easing:'ease-out'}).onfinish=function(){f.remove()};
+      for(var i=0;i<9;i++){var p=document.createElement('span');p.className='spark';p.style.left=x+'px';p.style.top=(H-3)+'px';box.appendChild(p);
+        var dx=rnd(-46,46),dy=rnd(-14,-56);
+        p.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:'translate('+dx+'px,'+dy+'px) scale(.4)',opacity:0}],{duration:rnd(550,900),easing:'cubic-bezier(.16,1,.3,1)'}).onfinish=(function(el){return function(){el.remove()}})(p)}
+    }
+    function launch(b){
+      var W=box.clientWidth,H=box.clientHeight,len=rnd(50,120),x=rnd(.04,.96)*W;
+      b.style.left=x+'px';b.style.height=len+'px';
+      var a=b.animate([{transform:'translateY('+(-len-20)+'px)'},{transform:'translateY('+(H-len)+'px)'}],{duration:rnd(3200,7000),delay:rnd(0,3500),easing:'cubic-bezier(.45,0,.9,.6)'});
+      a.onfinish=function(){if(document.visibilityState==='visible')explode(x,H);b.style.transform='translateY(-200px)';launch(b)};
+    }
+    for(var i=0;i<n;i++){var b=document.createElement('div');b.className='beam';b.style.transform='translateY(-200px)';box.appendChild(b);launch(b)}
+  })();
   var bar=document.getElementById('bar');
   addEventListener('scroll',function(){bar.classList.toggle('scrolled',scrollY>8);if(scrollY<300)document.querySelectorAll('.bar nav a.on').forEach(function(a){a.classList.remove('on')})},{passive:true});
 
