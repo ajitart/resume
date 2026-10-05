@@ -142,13 +142,20 @@ section{scroll-margin-top:84px}
 /* timeline */
 .tl{position:sticky;top:64px;z-index:6;margin:0 0 20px;padding:12px 0 8px;background:var(--bg);border-bottom:1px solid transparent;transition:border-color .2s,box-shadow .2s}
 .tl.stuck{border-bottom-color:var(--line);box-shadow:0 10px 18px -16px rgba(15,17,21,.35)}
-.tl-track{display:flex;height:10px;border-radius:999px;overflow:hidden;background:var(--surface-2);gap:2px}
-.seg{flex:none;height:100%;border:0;padding:0;background:var(--line-2);cursor:pointer;transition:background-color .2s}
+.tl-track{position:relative;height:10px;border-radius:999px;overflow:hidden;background:var(--surface-2)}
+.seg{position:absolute;top:0;height:100%;border:0;padding:0;background:var(--line-2);cursor:pointer;transition:background-color .2s,opacity .25s}
+.tl.has-active .seg:not(.on){opacity:.3}
 .seg.cur{background:var(--fg)}
 .seg:hover,.seg.on{background:var(--brand)}
 .tl-years{position:relative;height:20px;margin-top:8px;font-size:.75rem;color:var(--fg-3)}
 .tl-years span{position:absolute;transform:translateX(-50%)}
 .tl-years span:first-child{transform:none}
+.tl-years .tick{transition:opacity .2s}
+.tl.has-active .tl-years .tick{opacity:.2}
+.tl-range{position:absolute;top:0;height:20px;border-top:2px solid var(--brand);display:flex;justify-content:center;opacity:0;pointer-events:none;transition:left .35s var(--ease),width .35s var(--ease),opacity .2s}
+.tl-range.al{justify-content:flex-start}.tl-range.ar{justify-content:flex-end}
+.tl-range b{margin-top:2px;padding:0 3px;font-size:.78rem;font-weight:600;color:var(--fg);white-space:nowrap;background:var(--bg)}
+.tl.has-active .tl-range{opacity:1}
 .tl-tip{margin:6px 0 0;font-size:.85rem;color:var(--fg-2);min-height:1.5em}
 .tl-tip b{color:var(--fg);font-weight:500}
 
@@ -603,12 +610,16 @@ section{scroll-margin-top:84px}
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   var refs=[],hovering=false,active=null,tl=document.querySelector('.tl');
   function show(r){tip.innerHTML='';var b1=document.createElement('b');b1.textContent=r.role+', '+r.co;tip.append(b1,' · '+r.when)}
-  function mark(r){refs.forEach(function(x){x.seg.classList.toggle('on',x===r)});if(r)show(r);else tip.innerHTML=def}
+  function mark(r){refs.forEach(function(x){x.seg.classList.toggle('on',x===r)});tl.classList.toggle('has-active',!!r);
+    var rng=document.querySelector('.tl-range');
+    if(r){show(r);if(rng){rng.style.left=r.left+'%';rng.style.width=r.width+'%';rng.firstChild.textContent=r.when.trim();rng.classList.toggle('al',r.left<8);rng.classList.toggle('ar',r.left+r.width>92)}}
+    else tip.innerHTML=def}
   items.forEach(function(el){
     var a=m(el.dataset.s),b=m(el.dataset.e)+1,seg=document.createElement('button');
     seg.type='button';seg.tabIndex=-1;seg.className='seg'+(el.hasAttribute('data-cur')?' cur':'');
-    seg.style.width='calc('+((b-a)/span*100)+'% - 2px)';
-    var r={el:el,seg:seg,role:el.querySelector('h3,b').textContent,co:el.querySelector('.at,span').textContent,when:el.querySelector('.when,.yr').firstChild.textContent};
+    seg.style.left=((a-t0)/span*100)+'%';seg.style.width='calc('+((b-a)/span*100)+'% - 2px)';
+    var y1=el.dataset.s.slice(0,4),y2=el.dataset.e==='now'?'Present':el.dataset.e.slice(0,4);
+    var r={el:el,seg:seg,left:(a-t0)/span*100,width:(b-a)/span*100,years:y1===y2?y1:y1+' – '+y2,role:el.querySelector('h3,b').textContent,co:el.querySelector('.at,span').textContent,when:el.querySelector('.when,.yr').firstChild.textContent};
     refs.push(r);
     seg.addEventListener('mouseenter',function(){hovering=true;el.classList.add('on');mark(r)});
     seg.addEventListener('mouseleave',function(){hovering=false;el.classList.remove('on');mark(active)});
@@ -628,7 +639,8 @@ section{scroll-margin-top:84px}
   addEventListener('scroll',tlSpy,{passive:true});addEventListener('resize',tlSpy);
   tlSpy();
   var yrs=document.getElementById('years');
-  [2004,2010,2015,2020,2025].forEach(function(y){var s=document.createElement('span');s.textContent=y;s.style.left=((m(y+'-01')-t0)/span*100)+'%';yrs.appendChild(s)});
+  [2004,2010,2015,2020,2025].forEach(function(y){var s=document.createElement('span');s.className='tick';s.textContent=y;s.style.left=((m(y+'-01')-t0)/span*100)+'%';yrs.appendChild(s)});
+  var rng=document.createElement('div');rng.className='tl-range';rng.setAttribute('aria-hidden','true');rng.appendChild(document.createElement('b'));yrs.appendChild(rng);tlSpy();
 })();
 </script>
 </body>
