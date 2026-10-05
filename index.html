@@ -168,6 +168,12 @@ section{scroll-margin-top:84px}
 .job h3{margin:0;font-size:1.06rem;font-weight:600;letter-spacing:-.01em}
 .job .at{margin:2px 0 0;color:var(--fg-2);font-size:.95rem}
 .job p.d{margin:10px 0 0;max-width:62ch}
+.ic{display:inline-block;width:13px;height:13px;flex:none;margin-right:6px;vertical-align:-2px;color:var(--fg-3)}
+.job .when .dt,.job .when small{display:flex;align-items:center}
+.cur-meta{display:flex;flex-wrap:wrap;gap:2px 16px}.cur-meta span{display:inline-flex;align-items:center}
+.ej .yr,.aw .yr,.edu .yr{display:inline-flex;align-items:center;white-space:nowrap}
+.ej .yr .ic,.aw .yr .ic,.edu .yr .ic{width:12px;height:12px;margin-right:5px}
+.aw .lvl.win .ic{width:12px;height:12px;margin-right:4px;color:inherit}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
 .tag{font-size:.78rem;padding:3px 9px;border-radius:6px;background:var(--surface-2);color:var(--fg-2)}
 .job.on .tag{background:var(--bg)}
@@ -182,14 +188,14 @@ section{scroll-margin-top:84px}
 
 /* awards */
 .awards{list-style:none;margin:0;padding:0}
-.aw{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:20px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--line)}
+.aw{display:grid;grid-template-columns:84px minmax(0,1fr) auto;gap:20px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--line)}
 .aw:first-child{padding-top:4px}
 .aw .yr{color:var(--fg-2);font-size:.9rem}
 .aw b{display:block;font-weight:600}
 .aw .cat{color:var(--fg-2);font-size:.92rem}
 .aw .lvl{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:500;padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:var(--fg-2);white-space:nowrap}
 .aw .lvl.win{border-color:color-mix(in srgb,var(--brand) 70%,transparent);background:color-mix(in srgb,var(--brand) 16%,transparent);color:var(--brand-ink)}
-@media screen and (max-width:640px){.aw{grid-template-columns:56px 1fr}.aw .lvl{grid-column:2;justify-self:start}}
+@media screen and (max-width:640px){.aw{grid-template-columns:64px 1fr}.aw .lvl{grid-column:2;justify-self:start}}
 
 /* brands */
 .marquee{overflow:hidden;margin-inline:-4px;padding:4px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
@@ -298,7 +304,8 @@ section{scroll-margin-top:84px}
   .prod{padding:2px 8px;font-size:10.5px;border-radius:6px}.prod small{font-size:10px}
   .prod-desc{font-size:11px;margin-top:3px}
 
-  .job{grid-template-columns:112px minmax(0,1fr);gap:14px;padding:7px 0;margin:0;border-radius:0;break-inside:avoid}
+  .job .when .dt{white-space:nowrap}
+  .job{grid-template-columns:128px minmax(0,1fr);gap:12px;padding:7px 0;margin:0;border-radius:0;break-inside:avoid}
   .job.on{background:none}
   .job .when{font-size:10.5px}.job .when small{font-size:10px}
   .job h3{font-size:12.5px}.job .at{font-size:11px}
@@ -309,7 +316,8 @@ section{scroll-margin-top:84px}
   .ej{padding:4px 0;margin:0;font-size:10.5px;border-radius:0;break-inside:avoid}.ej .yr{font-size:10px}
 
   .awards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px}
-  .aw{grid-template-columns:34px minmax(0,1fr) auto;gap:10px;padding:5px 0;break-inside:avoid}
+  .aw{grid-template-columns:46px minmax(0,1fr) auto;gap:8px;padding:5px 0;break-inside:avoid}
+  .ic,.ej .yr .ic,.aw .yr .ic,.edu .yr .ic,.aw .lvl.win .ic{width:10px;height:10px;margin-right:4px}
   .aw:nth-child(2){padding-top:0}
   .aw:first-child{padding-top:0}
   .aw .yr{font-size:10.5px}.aw b{font-size:11.5px}.aw .cat{font-size:10.5px}
@@ -361,6 +369,8 @@ section{scroll-margin-top:84px}
   <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.3" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
   <symbol id="i-be" viewBox="0 0 24 24"><path d="M3.5 6.5h5a2.6 2.6 0 0 1 0 5.2h-5Zm0 5.2h5.6a2.9 2.9 0 0 1 0 5.8H3.5ZM14.5 13.6h6.3a3.2 3.2 0 1 0-1 2.6M15.5 7.5h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 10h17M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0V4ZM7 6H4.5v1.5A3.5 3.5 0 0 0 8 11M17 6h2.5v1.5A3.5 3.5 0 0 1 16 11M12 14v3.5M8.5 20.5h7M9.5 17.5h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
   <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
@@ -430,7 +440,7 @@ section{scroll-margin-top:84px}
             <div>
               <p class="co">CCTech</p>
               <p class="cur-role">Design Lead</p>
-              <p class="cur-meta tnum">Feb 2025 – Present · Pune</p>
+              <p class="cur-meta tnum"><span><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Feb 2025 – Present</span><span><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Pune</span></p>
             </div>
             <span class="pill"><span class="dot" aria-hidden="true"></span>Current</span>
           </div>
@@ -463,37 +473,37 @@ section{scroll-margin-top:84px}
 
         <ol class="jobs" id="jobs">
           <li class="job" data-s="2024-10" data-e="2025-01">
-            <div class="when tnum">Oct 2024 – Jan 2025<small>Mumbai</small></div>
+            <div class="when tnum"><span class="dt"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Oct 2024 – Jan 2025</span><small><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Mumbai</small></div>
             <div><h3>Creative Director</h3><p class="at">Ventures Advertising</p>
               <p class="d">Led the creative team for government-sector clients, taking campaigns from concept and ideation through to planning and execution. Worked with the team to shape big ideas, guided art direction and copy, and kept every piece clear, on-brief and on time.</p>
               <div class="tags"><span class="tag">Concept &amp; ideation</span><span class="tag">Campaign planning</span><span class="tag">Team leadership</span></div></div>
           </li>
           <li class="job" data-s="2023-08" data-e="2024-09">
-            <div class="when tnum">Aug 2023 – Sep 2024<small>Hyderabad</small></div>
+            <div class="when tnum"><span class="dt"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Aug 2023 – Sep 2024</span><small><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Hyderabad</small></div>
             <div><h3>Creative Solution Lead</h3><p class="at">Brane Enterprises · Digital Transformation GSI</p>
               <p class="d">Led branding and marketing for a product company. Designed the UI/UX for its products and company website, including user journeys for LLM chatbots and interfaces for AI products. Took brand videos from concept art through to production, and designed PowerPoint decks for client presentations.</p>
               <div class="tags"><span class="tag">Branding &amp; marketing</span><span class="tag">Product UI/UX</span><span class="tag">Website</span><span class="tag">Conversational AI</span><span class="tag">Brand video</span><span class="tag">Presentation design</span></div></div>
           </li>
           <li class="job" data-s="2021-08" data-e="2023-07">
-            <div class="when tnum">Aug 2021 – Jul 2023<small>Mumbai</small></div>
+            <div class="when tnum"><span class="dt"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Aug 2021 – Jul 2023</span><small><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Mumbai</small></div>
             <div><h3>Creative Director</h3><p class="at">Creativeland Asia</p>
               <p class="d">Led integrated campaigns for brands including Pizza Hut, Netflix, and Park Avenue across TVCs, digital, print, and social media, managing projects from concept to final production, including photoshoots and ad shoots.</p>
               <div class="tags"><span class="tag">Pizza Hut</span><span class="tag">Netflix</span><span class="tag">Park Avenue</span><span class="tag">TVC</span><span class="tag">Social video</span><span class="tag">Photo &amp; production shoots</span></div></div>
           </li>
           <li class="job" data-s="2019-08" data-e="2021-07">
-            <div class="when tnum">Aug 2019 – Jul 2021<small>Mumbai</small></div>
+            <div class="when tnum"><span class="dt"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Aug 2019 – Jul 2021</span><small><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Mumbai</small></div>
             <div><h3>Associate Creative Director</h3><p class="at">VMLY&amp;R</p>
               <p class="d">Led digital platforms and social media campaigns for leading brands including Big Bazaar, Pantaloons, and ICICI Bank.</p>
               <div class="tags"><span class="tag">Big Bazaar</span><span class="tag">Pantaloons</span><span class="tag">ICICI Bank</span></div></div>
           </li>
           <li class="job" data-s="2017-09" data-e="2019-07">
-            <div class="when tnum">Sep 2017 – Jul 2019<small>Mumbai</small></div>
+            <div class="when tnum"><span class="dt"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Sep 2017 – Jul 2019</span><small><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Mumbai</small></div>
             <div><h3>Associate Creative Director</h3><p class="at">The Digital Street</p>
               <p class="d">Led digital experiences and social media campaigns for leading brands including Axis Bank, Dolby, MTR Foods, ITC Engage, and DHL, driving creative strategy and execution across digital platforms.</p>
               <div class="tags"><span class="tag">Axis Bank</span><span class="tag">Dolby</span><span class="tag">MTR Foods</span><span class="tag">ITC Engage</span><span class="tag">DHL</span></div></div>
           </li>
           <li class="job" data-s="2013-10" data-e="2017-08">
-            <div class="when tnum">Oct 2013 – Aug 2017<small>Mumbai</small></div>
+            <div class="when tnum"><span class="dt"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Oct 2013 – Aug 2017</span><small><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Mumbai</small></div>
             <div><h3>Creative Controller</h3><p class="at">OgilvyOne Worldwide</p>
               <p class="d">Led digital strategy, platform experiences, and integrated social campaigns for leading brands including Vodafone, Madhya Pradesh Tourism, and Reliance General Insurance. Spearheaded #DarkTravelTales (RGI) from concept to execution, earning two Kyoorius Blue Elephants and recognition at Ogilvy’s Finest.</p>
               <div class="tags"><span class="tag">Reliance General Insurance</span><span class="tag">Vodafone</span><span class="tag">Madhya Pradesh Tourism</span><span class="tag">#DarkTravelTales</span><span class="tag">#BlueElephant</span><span class="tag">#Kyoorius</span><span class="tag">#OgilvysFinest</span></div></div>
@@ -502,26 +512,26 @@ section{scroll-margin-top:84px}
 
         <div class="earlier" id="earlier">
           <h4>Earlier roles</h4>
-          <div class="ej" data-s="2012-01" data-e="2013-09"><div><b>Senior Art Director</b><span>GreenApple Design</span></div><span class="yr tnum">2012 – 2013</span></div>
-          <div class="ej" data-s="2011-04" data-e="2011-12"><div><b>Art Director</b><span>3 Brothers &amp; Fils</span></div><span class="yr tnum">2011</span></div>
-          <div class="ej" data-s="2010-05" data-e="2010-12"><div><b>Art Director</b><span>Collateral</span></div><span class="yr tnum">2010</span></div>
-          <div class="ej" data-s="2008-10" data-e="2010-03"><div><b>Art Director</b><span>OgilvyOne Worldwide</span></div><span class="yr tnum">2008 – 2010</span></div>
-          <div class="ej" data-s="2006-11" data-e="2008-10"><div><b>Group Head</b><span>Thoughtrains Design</span></div><span class="yr tnum">2006 – 2008</span></div>
-          <div class="ej" data-s="2004-01" data-e="2006-09"><div><b>Senior Art Director</b><span>Jupiter Design Studio</span></div><span class="yr tnum">2004 – 2006</span></div>
+          <div class="ej" data-s="2012-01" data-e="2013-09"><div><b>Senior Art Director</b><span>GreenApple Design</span></div><span class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2012 – 2013</span></div>
+          <div class="ej" data-s="2011-04" data-e="2011-12"><div><b>Art Director</b><span>3 Brothers &amp; Fils</span></div><span class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2011</span></div>
+          <div class="ej" data-s="2010-05" data-e="2010-12"><div><b>Art Director</b><span>Collateral</span></div><span class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2010</span></div>
+          <div class="ej" data-s="2008-10" data-e="2010-03"><div><b>Art Director</b><span>OgilvyOne Worldwide</span></div><span class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2008 – 2010</span></div>
+          <div class="ej" data-s="2006-11" data-e="2008-10"><div><b>Group Head</b><span>Thoughtrains Design</span></div><span class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2006 – 2008</span></div>
+          <div class="ej" data-s="2004-01" data-e="2006-09"><div><b>Senior Art Director</b><span>Jupiter Design Studio</span></div><span class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2004 – 2006</span></div>
         </div>
       </section>
 
       <section id="awards">
         <div class="h"><h2 lang="hi">जीत की ज़िद</h2><span>Awards &amp; recognition</span></div>
         <ul class="awards">
-          <li class="aw"><span class="yr tnum">2016</span><div><b>Kyoorius Blue Elephant · Use of Social Media</b><span class="cat">#DarkTravelTales · Reliance General Insurance</span></div><span class="lvl win">Winner</span></li>
-          <li class="aw"><span class="yr tnum">2016</span><div><b>Kyoorius Blue Elephant · Direct Innovation</b><span class="cat">#DarkTravelTales · Reliance General Insurance</span></div><span class="lvl win">Winner</span></li>
-          <li class="aw"><span class="yr tnum">2015</span><div><b>Ogilvy’s Finest · The Envies</b><span class="cat">#DarkTravelTales · Reliance General Insurance</span></div><span class="lvl win">Winner</span></li>
-          <li class="aw"><span class="yr tnum">2015</span><div><b>DMAI · Art Direction</b><span class="cat">Sustainability Report · Vodafone</span></div><span class="lvl">Bronze</span></li>
-          <li class="aw"><span class="yr tnum">2014</span><div><b>ECHO · Effectiveness</b><span class="cat">Subscription emailers · The Economist</span></div><span class="lvl">Bronze</span></li>
-          <li class="aw"><span class="yr tnum">2014</span><div><b>DMA Asia ECHO</b><span class="cat">24x7 Roadside Assistance, digital video · Reliance General Insurance</span></div><span class="lvl">Bronze</span></li>
-          <li class="aw"><span class="yr tnum">2014</span><div><b>ECHO International</b><span class="cat">24x7 Roadside Assistance, digital video · Reliance General Insurance</span></div><span class="lvl">Finalist</span></li>
-          <li class="aw"><span class="yr tnum">2010</span><div><b>Abby · Direct Marketing</b><span class="cat">Westside</span></div><span class="lvl">Shortlist</span></li>
+          <li class="aw"><span class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2016</span><div><b>Kyoorius Blue Elephant · Use of Social Media</b><span class="cat">#DarkTravelTales · Reliance General Insurance</span></div><span class="lvl win"><svg class="ic" aria-hidden="true"><use href="#i-trophy"/></svg>Winner</span></li>
+          <li class="aw"><span class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2016</span><div><b>Kyoorius Blue Elephant · Direct Innovation</b><span class="cat">#DarkTravelTales · Reliance General Insurance</span></div><span class="lvl win"><svg class="ic" aria-hidden="true"><use href="#i-trophy"/></svg>Winner</span></li>
+          <li class="aw"><span class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2015</span><div><b>Ogilvy’s Finest · The Envies</b><span class="cat">#DarkTravelTales · Reliance General Insurance</span></div><span class="lvl win"><svg class="ic" aria-hidden="true"><use href="#i-trophy"/></svg>Winner</span></li>
+          <li class="aw"><span class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2015</span><div><b>DMAI · Art Direction</b><span class="cat">Sustainability Report · Vodafone</span></div><span class="lvl">Bronze</span></li>
+          <li class="aw"><span class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2014</span><div><b>ECHO · Effectiveness</b><span class="cat">Subscription emailers · The Economist</span></div><span class="lvl">Bronze</span></li>
+          <li class="aw"><span class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2014</span><div><b>DMA Asia ECHO</b><span class="cat">24x7 Roadside Assistance, digital video · Reliance General Insurance</span></div><span class="lvl">Bronze</span></li>
+          <li class="aw"><span class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2014</span><div><b>ECHO International</b><span class="cat">24x7 Roadside Assistance, digital video · Reliance General Insurance</span></div><span class="lvl">Finalist</span></li>
+          <li class="aw"><span class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2010</span><div><b>Abby · Direct Marketing</b><span class="cat">Westside</span></div><span class="lvl">Shortlist</span></li>
         </ul>
       </section>
 
@@ -544,10 +554,10 @@ section{scroll-margin-top:84px}
       <section id="education">
         <div class="h"><h2 lang="hi">पढ़ाई? वह क्या होती है?</h2><span>Education</span></div>
         <ul class="edu">
-          <li><b>Diploma in Applied Arts</b><span>L. S. Raheja School of Art, Mumbai</span><div class="yr tnum">1999 – 2002</div></li>
-          <li><b>Photography</b><span>L. S. Raheja School of Art</span><div class="yr tnum">2002</div></li>
-          <li><b>3D Animation</b><span>Digital Academy</span><div class="yr tnum">2002</div></li>
-          <li><b>Foundation of Arts</b><span>Indian Art Institute, Mumbai</span><div class="yr tnum">1998 – 1999</div></li>
+          <li><b>Diploma in Applied Arts</b><span>L. S. Raheja School of Art, Mumbai</span><div class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>1999 – 2002</div></li>
+          <li><b>Photography</b><span>L. S. Raheja School of Art</span><div class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2002</div></li>
+          <li><b>3D Animation</b><span>Digital Academy</span><div class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>2002</div></li>
+          <li><b>Foundation of Arts</b><span>Indian Art Institute, Mumbai</span><div class="yr tnum"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>1998 – 1999</div></li>
         </ul>
       </section>
 
@@ -619,7 +629,7 @@ section{scroll-margin-top:84px}
     seg.type='button';seg.tabIndex=-1;seg.className='seg'+(el.hasAttribute('data-cur')?' cur':'');
     seg.style.left=((a-t0)/span*100)+'%';seg.style.width='calc('+((b-a)/span*100)+'% - 2px)';
     var y1=el.dataset.s.slice(0,4),y2=el.dataset.e==='now'?'Present':el.dataset.e.slice(0,4);
-    var r={el:el,seg:seg,left:(a-t0)/span*100,width:(b-a)/span*100,years:y1===y2?y1:y1+' – '+y2,role:el.querySelector('h3,b').textContent,co:el.querySelector('.at,span').textContent,when:el.querySelector('.when,.yr').firstChild.textContent};
+    var r={el:el,seg:seg,left:(a-t0)/span*100,width:(b-a)/span*100,years:y1===y2?y1:y1+' – '+y2,role:el.querySelector('h3,b').textContent,co:(el.querySelector('.at')||el.querySelector('div > span')).textContent,when:(el.querySelector('.when .dt')||el.querySelector('.yr')).textContent.trim()};
     refs.push(r);
     seg.addEventListener('mouseenter',function(){hovering=true;el.classList.add('on');mark(r)});
     seg.addEventListener('mouseleave',function(){hovering=false;el.classList.remove('on');mark(active)});
