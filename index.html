@@ -93,8 +93,8 @@ svg{display:block}
 :root[data-theme="dark"] .beams{--beam:rgba(238,240,243,.26)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .beams{--beam:rgba(238,240,243,.26)}}
 .beam{position:absolute;top:0;width:1.5px;border-radius:2px;background:linear-gradient(to bottom,transparent,color-mix(in srgb,var(--beam) 50%,transparent) 55%,var(--beam));will-change:transform}
-.spark{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--beam);will-change:transform,opacity}
-.flash{position:absolute;height:2px;width:90px;border-radius:2px;background:radial-gradient(closest-side,var(--beam),transparent);will-change:opacity,transform}
+.spark{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--brand);will-change:transform,opacity}
+.flash{position:absolute;height:2px;width:90px;border-radius:2px;background:radial-gradient(closest-side,var(--brand),transparent);will-change:opacity,transform}
 @media (prefers-reduced-motion: reduce){.beams{display:none}}
 .intro .wrap{display:grid;grid-template-columns:minmax(0,1fr) 340px;grid-template-areas:"lockup photo" "body facts";gap:28px clamp(32px,6vw,88px);align-items:end}
 .ibody{grid-area:body}
